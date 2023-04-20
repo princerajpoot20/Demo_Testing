@@ -39,4 +39,47 @@ public class MainActivity extends AppCompatActivity implements OnRecyclerClickLi
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
     }
+
+
+
+
+
+    @Override
+    protected void onCreate(Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+
+        setContentView(R.layout.activity_main);
+
+
+        fab_next = findViewById(R.id.fab_next);
+        fab_prev = findViewById(R.id.fab_prev);
+
+        dialog = new ProgressDialog(this);
+        dialog.setTitle("Good thing come to those who wait...");
+
+        manager = new RequestManager(this);
+        manager.getCuratedWallpapers(listener,"1");
+
+        fab_next.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                String next_page = String.valueOf(page+1);
+                manager.getCuratedWallpapers(listener,next_page);
+                dialog.show();
+            }
+        });
+        fab_prev.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                if (page>1) {
+                    String prev_page = String.valueOf(page-1);
+                    manager.getCuratedWallpapers(listener,prev_page);
+                    dialog.show();
+                }
+            }
+        });
+    }
+
+
+
 }
