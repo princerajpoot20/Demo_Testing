@@ -1,10 +1,38 @@
 package com.example.myapplication;
 
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.appcompat.widget.SearchView;
+import androidx.recyclerview.widget.GridLayoutManager;
+import androidx.recyclerview.widget.RecyclerView;
 
+import android.app.ProgressDialog;
+import android.content.Intent;
 import android.os.Bundle;
+import android.view.Menu;
+import android.view.MenuItem;
+import android.view.View;
+import android.widget.ProgressBar;
+import android.widget.Toast;
 
-public class MainActivity extends AppCompatActivity {
+import com.example.paper.Adapters.CuratedAdapter;
+import com.example.paper.Listeners.CuratedResponseListener;
+import com.example.paper.Listeners.OnRecyclerClickListener;
+import com.example.paper.Listeners.SearchResponseListener;
+import com.example.paper.Models.CuratedAPIResponse;
+import com.example.paper.Models.Photo;
+import com.example.paper.Models.SearchAPIResponse;
+import com.google.android.material.floatingactionbutton.FloatingActionButton;
+
+import java.util.ArrayList;
+
+public class MainActivity extends AppCompatActivity implements OnRecyclerClickListener {
+
+    RecyclerView recyclerView_home;
+    CuratedAdapter adapter;
+    ProgressDialog dialog;
+    RequestManager manager;
+    FloatingActionButton fab_next,fab_prev;
+    int page;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
