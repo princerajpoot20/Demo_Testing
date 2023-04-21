@@ -81,5 +81,25 @@ public class MainActivity extends AppCompatActivity implements OnRecyclerClickLi
     }
 
 
+    private final CuratedResponseListener listener = new CuratedResponseListener() {
+        @Override
+        public void onFetch(CuratedAPIResponse response, String message) {
+            dialog.dismiss();
+            if (response.getPhotos().isEmpty())
+            {
+                Toast.makeText(MainActivity.this, "No Image found", Toast.LENGTH_SHORT).show();
+                return;
+            }
+            page = response.getPage();
+            showData(response.getPhotos());
+        }
+
+        @Override
+        public void onError(String message) {
+            dialog.dismiss();
+            Toast.makeText(MainActivity.this, message, Toast.LENGTH_SHORT).show();
+        }
+    };
+
 
 }
