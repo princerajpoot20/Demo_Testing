@@ -100,6 +100,34 @@ public class MainActivity extends AppCompatActivity implements OnRecyclerClickLi
             Toast.makeText(MainActivity.this, message, Toast.LENGTH_SHORT).show();
         }
     };
+    private void showData(ArrayList<Photo> photos) {
+        recyclerView_home = findViewById(R.id.recycler_home);
+        recyclerView_home.setHasFixedSize(true);
+        recyclerView_home.setLayoutManager(new GridLayoutManager(this,2));
+        adapter = new CuratedAdapter(MainActivity.this,photos,this);
+        recyclerView_home.setAdapter(adapter);
+    }
+
+    @Override
+    public void onClick(Photo photo) {
+        startActivity(new Intent(MainActivity.this,WallpaperActivity.class)
+                .putExtra("Photo",photo));
+    }
+
+    @Override
+    public boolean onCreateOptionsMenu(Menu menu) {
+        getMenuInflater().inflate(R.menu.menu, menu);
+        MenuItem menuItem = menu.findItem(R.id.action_search);
+        SearchView searchView = (SearchView) menuItem.getActionView();
+        searchView.setQueryHint("Imagine to power...");
+        searchView.setOnQueryTextListener(new SearchView.OnQueryTextListener() {
+            @Override
+            public boolean onQueryTextSubmit(String query) {
+                manager.searchCuratedWallpapers(searchResponseListener,"1",query);
+                dialog.show();
+                return true;
+            }
+
 
 
 }
